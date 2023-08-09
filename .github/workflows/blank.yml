@@ -1,31 +1,30 @@
-name: Run Colab Notebook
+name: 运行 Colab 笔记本
 
 on:
   schedule:
-    - cron: "*/2 * * * *"
+    - cron: "0 0 */3 * *"  # 这会在每隔3天的UTC时间午夜运行该作业
 
 jobs:
   run_colab:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Check out repository
-      uses: actions/checkout@v2   # 更新到支援 node16 的版本
-      with:
-        ref: v2   # 更新為操作的新版本號
-
-    - name: Set up Python
-      uses: actions/setup-python@v2   # 更新到支援 node16 的版本
+    - name: 检出仓库
+      uses: actions/checkout@v2
+      
+    - name: 设置 Python
+      uses: actions/setup-python@v2
       with:
         python-version: 3.7
 
-    - name: Install required packages
+    - name: 安装所需的包
       run: |
         pip install jupyter nbconvert yfinance gspread requests
 
-    - name: Run Colab notebook
+    - name: 运行 Colab 笔记本
       run: |
-        jupyter nbconvert --execute HSI.py
+        jupyter nbconvert --execute HSI.ipynb  # 替换为你的 Colab 笔记本的实际文件名
+
 
 
 
