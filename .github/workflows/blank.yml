@@ -1,0 +1,27 @@
+name: 手動觸發執行 Python 腳本
+
+on:
+  workflow_dispatch:  # 手動觸發的事件
+
+jobs:
+  run_script:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: 檢出程式庫
+      uses: actions/checkout@v2   # 更新到支援 node16 的版本
+      with:
+        ref: v2   # 更新為操作的新版本號
+
+    - name: 設置 Python 環境
+      uses: actions/setup-python@v2   # 更新到支援 node16 的版本
+      with:
+        python-version: 3.7
+
+    - name: 安裝所需套件
+      run: |
+        pip install yfinance gspread requests
+
+    - name: 執行 Python 腳本
+      run: python HSI.py  # 請將此處的 "你的腳本.py" 替換為您的實際 Python 腳本文件名稱
+
